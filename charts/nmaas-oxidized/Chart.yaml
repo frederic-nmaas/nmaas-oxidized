@@ -8,12 +8,8 @@ keywords:
 - configuration management
 - rancid
 maintainers:
-- email: saku@ytti.fi
-  name: Saku Ytti (Lead developer)
-- email: sam@arahant.net
-  name: Samer Abdel-Hafez (Lead developer)
 - email: frederic.loui@renater.fr
-  name: Frederic LOUI (Chart maintainer)
+  name: frederic-nmaas
 name: nmaas-oxidized
 sources:
 - https://github.com/ytti/oxidized
