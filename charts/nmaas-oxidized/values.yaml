@@ -1,0 +1,37 @@
+replicaCount: 1
+init:
+  image:
+    repository: busybox
+    tag: 1.31
+    pullPolicy: IfNotPresent
+image:
+  repository: artifactory.software.geant.org/nmaas-docker-local/nmaas-oxidized
+  tag: 0.25.1
+  pullPolicy: Always
+service:
+  name: oxidized
+  port: 8888
+  targetPort: oxidized-port
+persistence:
+  enabled: true
+  existingClaim: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /root/.config/oxidized
+env:
+  name: CONFIG_RELOAD_INTERVAL
+  value: 600
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+ingress:
+  enabled: true
+  class: nginx
+  hosts:
+    - oxidized.nmaas.geant.org
+  tls:
+    enabled: false

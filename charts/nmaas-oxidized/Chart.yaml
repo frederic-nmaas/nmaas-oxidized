@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: 0.25.1
+description: Geant NMaaS Oxidized Helm chart for Kubernetes (with ingress support)
+engine: gotpl
+home: https://github.com/ytti/oxidized
+keywords:
+- inventory
+- configuration management
+- rancid
+maintainers:
+- email: frederic.loui@renater.fr
+  name: frederic-nmaas
+name: nmaas-oxidized
+sources:
+- https://github.com/ytti/oxidized
+version: 2.0.2

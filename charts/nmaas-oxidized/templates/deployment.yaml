@@ -1,0 +1,85 @@
+{{- $fullName := include "fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    configmap.reloader.stakater.com/reload: {{ printf "%s-base,%s-model" .Release.Name .Release.Name | quote }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.replicaCount }}
+  strategy: 
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        release: {{ .Release.Name }}
+        restartAware: "true"
+    spec:
+      {{- if not (empty .Values.domain) }}
+      nodeSelector:
+        domain: {{ .Values.domain }}
+      {{- end }}
+      volumes:
+      - name: {{ .Values.persistence.name | default (include "fullname" .) }}
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName:  {{ .Values.persistence.existingClaim | default (printf "%s" $fullName) | quote }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      - name: config-base
+        configMap:
+          name: "{{ .Release.Name  }}-base"
+      - name: config-model
+        configMap:
+          name: "{{ .Release.Name  }}-model"
+      initContainers:
+        - name: oxidized-init
+          image: "{{ .Values.init.image.repository }}:{{ .Values.init.image.tag }}"
+          command: ['sh', '-c', 'if [ -f /storage/pid ]; then rm /storage/pid; fi']
+          imagePullPolicy: {{ .Values.init.image.pullPolicy }}
+          volumeMounts:
+          - mountPath: "/storage/"
+            name: {{ .Values.persistence.name | default (include "fullname" .) | quote }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          name: {{ .Values.service.targetPort }}
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: 20
+          timeoutSeconds: 5
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.port }}
+          timeoutSeconds: 5
+          periodSeconds: 15
+        volumeMounts:
+        - mountPath: "/root/.config/oxidized"
+          name: config-base
+        - mountPath: "/root/.config/oxidized/model"
+          name: config-model
+        - mountPath: "/storage/"
+          name: {{ .Values.persistence.name | default (include "fullname" .) | quote }}
+        env:
+        - name: {{ .Values.env.name }}
+          value: "{{ .Values.env.value }}"
+        - name: OXIDIZED_LOGS
+          value: "/storage/"
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
