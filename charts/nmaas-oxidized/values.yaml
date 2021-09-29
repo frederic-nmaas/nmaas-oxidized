@@ -35,4 +35,3 @@ ingress:
     - oxidized.nmaas.geant.org
   tls:
     enabled: false
-
