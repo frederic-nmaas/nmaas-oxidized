@@ -11,7 +11,7 @@ image:
 service:
   name: oxidized
   port: 8888
-  targetPort: oxidized-port 
+  targetPort: oxidized-port
 persistence:
   enabled: true
   existingClaim: ""
@@ -19,7 +19,7 @@ persistence:
   size: 1Gi
   mountPath: /root/.config/oxidized
 env:
-  name: CONFIG_RELOAD_INTERVAL       
+  name: CONFIG_RELOAD_INTERVAL
   value: 600
 resources:
   limits:
@@ -35,3 +35,4 @@ ingress:
     - oxidized.nmaas.geant.org
   tls:
     enabled: false
+
