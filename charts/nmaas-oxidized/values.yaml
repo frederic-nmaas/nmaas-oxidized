@@ -6,7 +6,7 @@ init:
     pullPolicy: IfNotPresent
 image:
   repository: artifactory.software.geant.org/nmaas-docker-local/nmaas-oxidized
-  tag: 0.25.1
+  tag: 0.28.0
   pullPolicy: Always
 service:
   name: oxidized
