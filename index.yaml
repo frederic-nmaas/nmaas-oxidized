@@ -2,6 +2,25 @@ apiVersion: v1
 entries:
   nmaas-oxidized:
   - apiVersion: v2
+    appVersion: 0.29.0
+    created: "2023-05-12T14:52:13.31096811Z"
+    description: Geant NMaaS Oxidized Helm chart for Kubernetes (with ingress support)
+    digest: 50c443b9e6e7171b43bbf5ec688004234e556fc3e65529358587cd52f24eb1bc
+    home: https://github.com/ytti/oxidized
+    keywords:
+    - inventory
+    - configuration management
+    - rancid
+    maintainers:
+    - email: frederic.loui@renater.fr
+      name: frederic-nmaas
+    name: nmaas-oxidized
+    sources:
+    - https://github.com/ytti/oxidized
+    urls:
+    - https://github.com/frederic-nmaas/nmaas-oxidized/releases/download/nmaas-oxidized-2.0.3/nmaas-oxidized-2.0.3.tgz
+    version: 2.0.3
+  - apiVersion: v2
     appVersion: 0.25.1
     created: "2021-09-29T13:04:33.131598317Z"
     description: Geant NMaaS Oxidized Helm chart for Kubernetes (with ingress support)
@@ -20,4 +39,4 @@ entries:
     urls:
     - https://github.com/frederic-nmaas/nmaas-oxidized/releases/download/nmaas-oxidized-2.0.2/nmaas-oxidized-2.0.2.tgz
     version: 2.0.2
-generated: "2021-09-29T13:04:33.131606318Z"
+generated: "2023-05-12T14:52:13.310976511Z"
