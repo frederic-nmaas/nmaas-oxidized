@@ -5,9 +5,9 @@ init:
     tag: 1.31
     pullPolicy: IfNotPresent
 image:
-  repository: artifactory.software.geant.org/nmaas-docker-local/nmaas-oxidized
-  tag: 0.25.1
-  pullPolicy: Always
+  repository: oxidized/oxidized
+  tag: 0.29.0
+  pullPolicy: IfNotPresent
 service:
   name: oxidized
   port: 8888
