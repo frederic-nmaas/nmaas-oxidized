@@ -2,7 +2,7 @@ replicaCount: 1
 init:
   image:
     repository: busybox
-    tag: 1.36
+    tag: 1.38
     pullPolicy: IfNotPresent
 image:
   repository: oxidized/oxidized
